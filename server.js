@@ -10,4 +10,7 @@ app.listen(port,()=>{
     console.log(`app is running on port ${port}`)
 })
 
-
+//! Connection check
+app.get("/",(req,res)=>{
+    res.json({message:"Welcome to E-Shopping"})
+}) 
