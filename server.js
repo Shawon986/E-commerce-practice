@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const dotenv = require("dotenv").config()
 const app = express()
 app.use(bodyParser.json())
+const bcrypt= require("bcrypt")
 const mongoose = require("mongoose")
 const connect_db = require("./config/db")
 
@@ -32,11 +33,14 @@ const User = mongoose.model("User",userSchema)
 //! Create a user API
 app.post("/create",async(req,res)=>{
     try {
+        const salt =await bcrypt.genSalt(10)
+        const hashedPassword =await bcrypt.hash(req.body.password,salt)
+        const password= hashedPassword
         const userObj={
             name:req.body.name,
             email:req.body.email,
             age:req.body.age,
-            password:req.body.password
+            password:password,
         }
         const user = new User(userObj)
         res.status(201).json(user)
