@@ -42,8 +42,24 @@ app.post("/create",async(req,res)=>{
         res.status(201).json(user)
         await user.save()
     } catch (error) {
+        console.error(error)
        res.status(400).json({message:"Something went wrong in this server" })
     }
    
 })
 
+//! Get all user API
+app.get("/get",async(req,res)=>{
+    try {
+        const user = await User.find({})
+        if(!user){
+            res.status(404).json({message:"User not found"})
+        }else{
+            res.json(user)
+        }
+
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({message:"Something went wrong in this server" })
+    }
+})
