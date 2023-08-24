@@ -67,3 +67,19 @@ app.get("/get",async(req,res)=>{
         res.status(400).json({message:"Something went wrong in this server" })
     }
 })
+
+//! Get a user by id
+app.get("/get/:id",async(req,res)=>{
+    try {
+        const id = req.params.id
+        const user = await User.findById(id)
+        if(!user){
+            res.status(404).json({message:"User not found"})
+        }else{
+            res.json(user)
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({message:"Something went wrong in this server" })
+    }
+}) 
